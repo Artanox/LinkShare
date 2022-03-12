@@ -9,7 +9,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class TagServiceTest {
@@ -43,5 +43,12 @@ class TagServiceTest {
         Tag tag = new Tag();
         when(tagRepository.save(tag)).thenReturn(tag);
         assertEquals(tag, tagService.updateTag(tag));
+    }
+
+    @Test
+    void deleteTag() {
+        Tag tag = new Tag();
+        tagService.deleteTag(tag);
+        verify(tagRepository, times(1)).delete(tag);
     }
 }
