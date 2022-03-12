@@ -26,7 +26,11 @@ public class TagCreationRequest {
         return nsfw;
     }
 
-    static enum DomainName {
+    public DomainName getDomain(){
+        return domain;
+    }
+
+    public static enum DomainName {
         MEGA, DRIVE
     }
 }

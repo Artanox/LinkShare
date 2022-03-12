@@ -9,16 +9,16 @@ public class UrlEntity {
     private Long id;
     private String name;
 
-//    @ManyToOne
-//    private TagEntity domain;
+    @ManyToOne
+    private TagEntity domain;
 
     public UrlEntity(){}
 
     public UrlEntity(String name
-//                     ,TagEntity domain
+                     ,TagEntity domain
     ) {
         this.name = name;
-//        this.domain = domain;
+        this.domain = domain;
     }
 
     public Long getId() {
@@ -37,11 +37,11 @@ public class UrlEntity {
         this.name = name;
     }
 
-//    public TagEntity getDomain() {
-//        return domain;
-//    }
+    public TagEntity getDomain() {
+        return domain;
+    }
 
-//    public void setDomain(TagEntity domain) {
-//        this.domain = domain;
-//    }
+    public void setDomain(TagEntity domain) {
+        this.domain = domain;
+    }
 }
