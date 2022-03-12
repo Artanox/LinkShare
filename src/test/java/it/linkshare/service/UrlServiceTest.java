@@ -1,8 +1,6 @@
 package it.linkshare.service;
 
-import it.linkshare.model.Tag;
-import it.linkshare.model.Url;
-import it.linkshare.repository.TagRepository;
+import it.linkshare.repository.entity.UrlEntity;
 import it.linkshare.repository.UrlRepository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -24,17 +22,17 @@ class UrlServiceTest {
     private UrlRepository urlRepository;
     @InjectMocks
     private UrlService urlService;
-    private static Url url;
+    private static UrlEntity url;
 
     @BeforeAll
     static void beforeAll(){
-        url = new Url();
+        url = new UrlEntity();
     }
 
     @Test
     void getAllUrl() {
         when(urlRepository.findAll())
-                .thenReturn(Stream.of(new Url(), new Url(), new Url()).collect(Collectors.toList()));
+                .thenReturn(Stream.of(new UrlEntity(), new UrlEntity(), new UrlEntity()).collect(Collectors.toList()));
         assertEquals(3, urlService.getAllUrl().size());
     }
 

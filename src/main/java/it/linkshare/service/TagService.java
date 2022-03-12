@@ -1,7 +1,10 @@
 package it.linkshare.service;
 
-import it.linkshare.model.Tag;
+import it.linkshare.controller.dto.Tag;
+import it.linkshare.controller.dto.TagCreationRequest;
+import it.linkshare.repository.entity.TagEntity;
 import it.linkshare.repository.TagRepository;
+import it.linkshare.service.mapper.TagMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,25 +12,25 @@ import java.util.List;
 @Service
 public class TagService {
 
-    TagRepository tagRepository;
+    private final TagRepository tagRepository;
 
     public TagService(TagRepository tagRepository){
         this.tagRepository = tagRepository;
     }
 
-    public Tag getTagById(Long id){
+    public TagEntity getTagById(Long id){
         return tagRepository.getById(id);
     }
 
-    public List<Tag> getAllTag(){
+    public List<TagEntity> getAllTag(){
         return tagRepository.findAll();
     }
 
-    public Tag addNewTag(Tag tag){
-        return tagRepository.save(tag);
+    public Tag addNewTag(TagCreationRequest request){
+        return TagMapper.mapToRest(tagRepository.save(TagMapper.mapToEntity(request)));
     }
 
-    public Tag updateTag(Tag tag, Long id){
+    public TagEntity updateTag(TagEntity tag, Long id){
         return tagRepository.findById(id)
                 .map(t -> {
                     t.setName(tag.getName());

@@ -1,19 +1,21 @@
-package it.linkshare.model;
+package it.linkshare.repository.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Tag {
+public class TagEntity {
 
-    @Id
+    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
     private String name;
     private Boolean nsfw;
 
-    public Tag(){}
+    public TagEntity(){}
 
-    public Tag(String name, Boolean nsfw) {
+    public TagEntity(String name, Boolean nsfw) {
         this.name = name;
         this.nsfw = nsfw;
     }

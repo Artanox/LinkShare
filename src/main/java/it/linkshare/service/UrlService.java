@@ -1,7 +1,6 @@
 package it.linkshare.service;
 
-import it.linkshare.model.Tag;
-import it.linkshare.model.Url;
+import it.linkshare.repository.entity.UrlEntity;
 import it.linkshare.repository.UrlRepository;
 import org.springframework.stereotype.Service;
 
@@ -17,23 +16,23 @@ public class UrlService {
     }
 
 
-    public List<Url> getAllUrl(){
+    public List<UrlEntity> getAllUrl(){
         return urlRepository.findAll();
     }
 
-    public Url getUrlById(Long id){
+    public UrlEntity getUrlById(Long id){
         return urlRepository.getById(id);
     }
 
-    public Url addNewUrl(Url url){
+    public UrlEntity addNewUrl(UrlEntity url){
         return urlRepository.save(url);
     }
 
-    public Url updateUrl(Url url){
+    public UrlEntity updateUrl(UrlEntity url){
         return urlRepository.save(url);
     }
 
-    public void deleteUrl(Url url){
+    public void deleteUrl(UrlEntity url){
         urlRepository.delete(url);
     }
 }
