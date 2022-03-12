@@ -1,14 +1,26 @@
 package it.linkshare.controller;
 
+import it.linkshare.model.Tag;
 import it.linkshare.service.TagService;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
+@RequestMapping("api/v1/tag")
 public class TagController {
 
-    TagService tagService;
+    private final TagService tagService;
 
     public TagController(TagService tagService){
         this.tagService = tagService;
     }
+
+    @GetMapping("/tags")
+    public List<Tag> getAll(){
+        return tagService.getAllTag();
+    }
+
 }
