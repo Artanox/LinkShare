@@ -37,4 +37,11 @@ class TagServiceTest {
         when(tagRepository.save(tag)).thenReturn(tag);
         assertEquals(tag, tagService.addNewTag(tag));
     }
+
+    @Test
+    void updateTag() {
+        Tag tag = new Tag();
+        when(tagRepository.save(tag)).thenReturn(tag);
+        assertEquals(tag, tagService.updateTag(tag));
+    }
 }

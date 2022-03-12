@@ -26,4 +26,8 @@ public class TagService {
     public Tag addNewTag(Tag tag){
         return tagRepository.save(tag);
     }
+
+    public Tag updateTag(Tag tag){
+        return tagRepository.save(tag);
+    }
 }
