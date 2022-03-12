@@ -1,22 +1,22 @@
-package it.linkshare.model;
+package it.linkshare.repository.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity
-public class Url {
+public class UrlEntity {
 
-    @Id
+    @Id @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
     private String name;
 
     @ManyToOne
-    private Tag domain;
+    private TagEntity domain;
 
-    public Url(){}
+    public UrlEntity(){}
 
-    public Url(String name, Tag domain) {
+    public UrlEntity(String name
+                     ,TagEntity domain
+    ) {
         this.name = name;
         this.domain = domain;
     }
@@ -37,11 +37,11 @@ public class Url {
         this.name = name;
     }
 
-    public Tag getDomain() {
+    public TagEntity getDomain() {
         return domain;
     }
 
-    public void setDomain(Tag domain) {
+    public void setDomain(TagEntity domain) {
         this.domain = domain;
     }
 }

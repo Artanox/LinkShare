@@ -1,9 +1,7 @@
 package it.linkshare.service;
 
-import it.linkshare.model.Link;
-import it.linkshare.model.Url;
+import it.linkshare.repository.entity.LinkEntity;
 import it.linkshare.repository.LinkRepository;
-import it.linkshare.repository.UrlRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,23 +15,23 @@ public class LinkService {
         this.linkRepository = linkRepository;
     }
 
-    public List<Link> getAllLink(){
+    public List<LinkEntity> getAllLink(){
         return linkRepository.findAll();
     }
 
-    public Link getLinkById(Long id){
+    public LinkEntity getLinkById(Long id){
         return linkRepository.getById(id);
     }
 
-    public Link addNewLink(Link link){
+    public LinkEntity addNewLink(LinkEntity link){
         return linkRepository.save(link);
     }
 
-    public Link updateLink(Link link){
+    public LinkEntity updateLink(LinkEntity link){
         return linkRepository.save(link);
     }
 
-    public void deleteLink(Link link){
+    public void deleteLink(LinkEntity link){
         linkRepository.delete(link);
     }
 }

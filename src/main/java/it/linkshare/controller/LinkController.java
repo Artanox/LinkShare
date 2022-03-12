@@ -1,6 +1,5 @@
 package it.linkshare.controller;
 
-import it.linkshare.model.Link;
 import it.linkshare.service.LinkService;
 import org.springframework.web.bind.annotation.RestController;
 

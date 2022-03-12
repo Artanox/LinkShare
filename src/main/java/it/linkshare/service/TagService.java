@@ -1,33 +1,40 @@
 package it.linkshare.service;
 
-import it.linkshare.model.Tag;
+import it.linkshare.controller.dto.Tag;
+import it.linkshare.controller.dto.TagCreationRequest;
 import it.linkshare.repository.TagRepository;
+import it.linkshare.repository.entity.TagEntity;
+import it.linkshare.service.mapper.TagMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
 @Service
 public class TagService {
 
-    TagRepository tagRepository;
+    private final TagRepository tagRepository;
 
-    public TagService(TagRepository tagRepository){
+    public TagService(TagRepository tagRepository) {
         this.tagRepository = tagRepository;
     }
 
-    public Tag getTagById(Long id){
-        return tagRepository.getById(id);
+    public Tag getTagById(Long id) {
+        return tagRepository.findFirstById(id)
+                .map(TagMapper::mapToRest)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-    public List<Tag> getAllTag(){
+    public List<TagEntity> getAllTag() {
         return tagRepository.findAll();
     }
 
-    public Tag addNewTag(Tag tag){
-        return tagRepository.save(tag);
+    public Tag addNewTag(TagCreationRequest request) {
+        return TagMapper.mapToRest(tagRepository.save(TagMapper.mapToEntity(request)));
     }
 
-    public Tag updateTag(Tag tag, Long id){
+    public TagEntity updateTag(TagEntity tag, Long id) {
         return tagRepository.findById(id)
                 .map(t -> {
                     t.setName(tag.getName());
@@ -40,7 +47,7 @@ public class TagService {
                 });
     }
 
-    public void deleteTag(Long id){
+    public void deleteTag(Long id) {
         tagRepository.deleteById(id);
     }
 
