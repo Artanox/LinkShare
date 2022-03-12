@@ -22,21 +22,26 @@ public class TagService {
     public List<Tag> getAllTag(){
         return tagRepository.findAll();
     }
-    /*
+
     public Tag addNewTag(Tag tag){
         return tagRepository.save(tag);
     }
 
     public Tag updateTag(Tag tag, Long id){
-
-        return tagRepository.save(tag);
+        return tagRepository.findById(id)
+                .map(t -> {
+                    t.setName(tag.getName());
+                    t.setNsfw(tag.getNsfw());
+                    return tagRepository.save(t);
+                })
+                .orElseGet(() -> {
+                    tag.setId(id);
+                    return tagRepository.save(tag);
+                });
     }
 
-    public void deleteTagById(Long id){
-        tagRepository.delete(tagRepository.getById(id));
+    public void deleteTag(Long id){
+        tagRepository.deleteById(id);
     }
 
-    public void deleteTag(Tag tag){
-        tagRepository.delete(tag);
-    }*/
 }

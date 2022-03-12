@@ -36,22 +36,22 @@ class TagServiceTest {
                 .thenReturn(Stream.of(new Tag(), new Tag(), new Tag()).collect(Collectors.toList()));
         assertEquals(3, tagService.getAllTag().size());
     }
-/*
     @Test
     void addNewTag() {
         when(tagRepository.save(tag)).thenReturn(tag);
         assertEquals(tag, tagService.addNewTag(tag));
     }
 
-    @Test
+/*    @Test
     void updateTag() {
-        when(tagRepository.save(tag)).thenReturn(tag);
-        assertEquals(tag, tagService.updateTag(tag));
-    }
+        Tag newTag = new Tag();
+        tagService.updateTag(newTag, tag.getId());
+        verify(tagRepository, times(1)).save(newTag);
+    }*/
 
     @Test
     void deleteTag() {
-        tagService.deleteTag(tag);
+        tagService.deleteTag(tag.getId());
         verify(tagRepository, times(1)).delete(tag);
-    }*/
+    }
 }

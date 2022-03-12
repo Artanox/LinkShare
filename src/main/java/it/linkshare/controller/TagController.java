@@ -25,7 +25,7 @@ public class TagController {
         return tagService.getAllTag();
     }
 
-/*    @PostMapping("/tag")
+    @PostMapping("/tag")
     Tag add(@RequestBody Tag tag) {
         return tagService.addNewTag(tag);
     }
@@ -37,7 +37,7 @@ public class TagController {
 
     @DeleteMapping("/tag/{id}")
     void delete(@PathVariable Long id) {
-        tagService.deleteTagById(id);
-    }*/
+        tagService.deleteTag(id);
+    }
 
 }
