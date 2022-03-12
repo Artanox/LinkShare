@@ -33,7 +33,7 @@ public class UrlService {
         return urlRepository.save(url);
     }
 
-    public void deleteTag(Url url){
+    public void deleteUrl(Url url){
         urlRepository.delete(url);
     }
 }

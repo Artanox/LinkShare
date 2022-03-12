@@ -57,8 +57,8 @@ class UrlServiceTest {
     }
 
     @Test
-    void deleteTag() {
-        urlService.deleteTag(url);
+    void deleteUrl() {
+        urlService.deleteUrl(url);
         verify(urlRepository, times(1)).delete(url);
     }
 }
