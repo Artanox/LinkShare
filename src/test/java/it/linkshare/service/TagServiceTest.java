@@ -28,7 +28,7 @@ class TagServiceTest {
     void getAllTag() {
         when(tagRepository.findAll())
                 .thenReturn(Stream.of(new Tag(), new Tag(), new Tag()).collect(Collectors.toList()));
-        assertEquals(1, tagService.getAllTag().size());
+        assertEquals(3, tagService.getAllTag().size());
     }
 
     @Test
