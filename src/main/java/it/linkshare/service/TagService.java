@@ -7,7 +7,6 @@ import it.linkshare.mapper.TagMapper;
 import it.linkshare.repository.TagRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -24,30 +23,44 @@ public class TagService {
 
     public TagResponseDTO getTagById(Long id) {
         return tagRepository.findById(id)
-                .map(TagMapper::mapToResponseDTO)
+                .map(TagMapper::mapToResponseDto)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     public List<TagResponseDTO> getAllTags() {
-        return tagRepository.findAll().stream().map(TagMapper::mapToResponseDTO).collect(Collectors.toList());
+        return tagRepository.findAll()
+                .stream()
+                .map(TagMapper::mapToResponseDto)
+                .collect(Collectors.toList());
     }
 
     public TagResponseDTO addNewTag(TagRequestDTO tagRequestDTO) {
-        return TagMapper.mapToResponseDTO(tagRepository.save(TagMapper.mapToDAO(tagRequestDTO)));
+        throwExceptionIfDaoNameAlreadyExist(tagRequestDTO);
+        return saveDaoThenMapResponseDto(
+                TagMapper.mapToDao(tagRequestDTO));
     }
 
     public TagResponseDTO updateTag(TagRequestDTO tagRequestDTO, Long id) {
-        TagDAO tagDAO = tagRepository.findById(id)
-                .map(tag -> {
-                    tag.setName(tagRequestDTO.getName());
-                    tag.setNsfw(tagRequestDTO.getNsfw());
-                    return tag;})
-                .orElse(TagMapper.mapToDAO(tagRequestDTO, id));
-        return TagMapper.mapToResponseDTO(tagRepository.save(tagDAO));
+        throwExceptionIfDaoNameAlreadyExist(tagRequestDTO);
+        return saveDaoThenMapResponseDto(
+                tagRepository.findById(id)
+                        .map(t -> TagMapper.maptoDao(t, tagRequestDTO))
+                        .orElse(TagMapper.mapToDao(id)));
     }
 
     public void deleteTag(Long id) {
-        if(tagRepository.existsById(id))
-            tagRepository.deleteById(id);
+        tagRepository.delete(tagRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)));
+    }
+
+    public TagResponseDTO saveDaoThenMapResponseDto(TagDAO tagDAO){
+        return TagMapper.mapToResponseDto(
+                tagRepository.save(tagDAO));
+    }
+
+    public void throwExceptionIfDaoNameAlreadyExist(TagRequestDTO tagRequestDTO) {
+        tagRepository.findByName(tagRequestDTO.getName())
+                .ifPresent(e -> {
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST);});
     }
 }
