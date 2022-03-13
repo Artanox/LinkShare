@@ -1,18 +1,13 @@
-package it.linkshare.controller.dto;
+package it.linkshare.dto;
 
-public class Tag {
-    private final Long id;
+public class TagRequestDTO {
+
     private final String name;
     private final Boolean nsfw;
 
-    public Tag(Long id, String name, Boolean nsfw) {
-        this.id = id;
+    public TagRequestDTO(String name, Boolean nsfw) {
         this.name = name;
         this.nsfw = nsfw;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public String getName() {

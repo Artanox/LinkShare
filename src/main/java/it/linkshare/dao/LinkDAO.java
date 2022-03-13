@@ -1,25 +1,25 @@
-package it.linkshare.repository.entity;
+package it.linkshare.dao;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
-public class LinkEntity {
+public class LinkDAO {
 
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     private BigDecimal id;
 
     @ManyToOne
-    private UrlEntity url;
+    private UrlDAO url;
 
     private String title;
     private String description;
 
-    @OneToMany(targetEntity= TagEntity.class)
-    private List<TagEntity> tagList;
+    @OneToMany(targetEntity= TagDAO.class)
+    private List<TagDAO> tagList;
 
-    public LinkEntity(
+    public LinkDAO(
 //            UrlEntity url,
             String title, String description) {
 //        this.url = url;
@@ -28,7 +28,7 @@ public class LinkEntity {
 //        this.tagList = tagList;
     }
 
-    public LinkEntity() {
+    public LinkDAO() {
 
     }
 
@@ -40,11 +40,11 @@ public class LinkEntity {
         this.id = id;
     }
 
-    public UrlEntity getUrl() {
+    public UrlDAO getUrl() {
         return url;
     }
 
-    public void setUrl(UrlEntity url) {
+    public void setUrl(UrlDAO url) {
         this.url = url;
     }
 
@@ -64,11 +64,11 @@ public class LinkEntity {
         this.description = description;
     }
 
-    public List<TagEntity> getTagList() {
+    public List<TagDAO> getTagList() {
         return tagList;
     }
 
-    public void setTagList(List<TagEntity> tagList) {
+    public void setTagList(List<TagDAO> tagList) {
         this.tagList = tagList;
     }
 }

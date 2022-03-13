@@ -1,21 +1,21 @@
-package it.linkshare.repository.entity;
+package it.linkshare.dao;
 
 import javax.persistence.*;
 
 @Entity
-public class UrlEntity {
+public class UrlDAO {
 
     @Id @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
     private String name;
 
     @ManyToOne
-    private TagEntity domain;
+    private TagDAO domain;
 
-    public UrlEntity(){}
+    public UrlDAO(){}
 
-    public UrlEntity(String name
-                     ,TagEntity domain
+    public UrlDAO(String name
+                     , TagDAO domain
     ) {
         this.name = name;
         this.domain = domain;
@@ -37,11 +37,11 @@ public class UrlEntity {
         this.name = name;
     }
 
-    public TagEntity getDomain() {
+    public TagDAO getDomain() {
         return domain;
     }
 
-    public void setDomain(TagEntity domain) {
+    public void setDomain(TagDAO domain) {
         this.domain = domain;
     }
 }

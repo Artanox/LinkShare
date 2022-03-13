@@ -1,12 +1,8 @@
 package it.linkshare.repository;
 
-import it.linkshare.repository.entity.TagEntity;
+import it.linkshare.dao.TagDAO;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Optional;
 
-public interface TagRepository extends JpaRepository<TagEntity, Long> {
-
-    Optional<TagEntity> findFirstById(Long id);
-
+public interface TagRepository extends JpaRepository<TagDAO, Long> {
 }

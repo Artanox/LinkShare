@@ -1,6 +1,6 @@
 package it.linkshare.service;
 
-import it.linkshare.repository.entity.UrlEntity;
+import it.linkshare.dao.UrlDAO;
 import it.linkshare.repository.UrlRepository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -22,17 +22,17 @@ class UrlServiceTest {
     private UrlRepository urlRepository;
     @InjectMocks
     private UrlService urlService;
-    private static UrlEntity url;
+    private static UrlDAO url;
 
     @BeforeAll
     static void beforeAll(){
-        url = new UrlEntity();
+        url = new UrlDAO();
     }
 
     @Test
     void getAllUrl() {
         when(urlRepository.findAll())
-                .thenReturn(Stream.of(new UrlEntity(), new UrlEntity(), new UrlEntity()).collect(Collectors.toList()));
+                .thenReturn(Stream.of(new UrlDAO(), new UrlDAO(), new UrlDAO()).collect(Collectors.toList()));
         assertEquals(3, urlService.getAllUrl().size());
     }
 
@@ -48,11 +48,11 @@ class UrlServiceTest {
         assertEquals(url, urlService.addNewUrl(url));
     }
 
-    @Test
+/*    @Test
     void updateUrl() {
         when(urlRepository.save(url)).thenReturn(url);
         assertEquals(url, urlService.updateUrl(url));
-    }
+    }*/
 
     @Test
     void deleteUrl() {

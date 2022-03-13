@@ -1,8 +1,7 @@
 package it.linkshare.controller;
 
-import it.linkshare.controller.dto.Tag;
-import it.linkshare.controller.dto.TagCreationRequest;
-import it.linkshare.repository.entity.TagEntity;
+import it.linkshare.dto.TagRequestDTO;
+import it.linkshare.dto.TagResponseDTO;
 import it.linkshare.service.TagService;
 import org.springframework.lang.NonNull;
 import org.springframework.validation.annotation.Validated;
@@ -15,32 +14,33 @@ import java.util.List;
 public class TagController {
 
     private final TagService tagService;
+
     public TagController(TagService tagService){
         this.tagService = tagService;
     }
 
     @GetMapping("/{id}")
-    public Tag get(@PathVariable("id") @NonNull Long id){
+    public TagResponseDTO get(@PathVariable @NonNull Long id){
         return tagService.getTagById(id);
     }
 
     @GetMapping()
-    public List<TagEntity> getAll(){
-        return tagService.getAllTag();
+    public List<TagResponseDTO> getAll(){
+        return tagService.getAllTags();
     }
 
     @PostMapping()
-    Tag add(@Validated @RequestBody TagCreationRequest tag) {
-        return tagService.addNewTag(tag);
+    TagResponseDTO add(@RequestBody TagRequestDTO tagRequestDTO) {
+        return tagService.addNewTag(tagRequestDTO);
     }
 
     @PutMapping("/{id}")
-    TagEntity update(@RequestBody TagEntity tag, @PathVariable Long id) {
-        return tagService.updateTag(tag, id);
+    TagResponseDTO update(@RequestBody TagRequestDTO tagRequestDTO, @PathVariable @NonNull Long id) {
+        return tagService.updateTag(tagRequestDTO, id);
     }
 
     @DeleteMapping("/{id}")
-    void delete(@PathVariable Long id) {
+    void delete(@PathVariable @NonNull Long id) {
         tagService.deleteTag(id);
     }
 

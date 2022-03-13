@@ -1,6 +1,6 @@
 package it.linkshare.service;
 
-import it.linkshare.repository.entity.UrlEntity;
+import it.linkshare.dao.UrlDAO;
 import it.linkshare.repository.UrlRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,23 +16,23 @@ public class UrlService {
     }
 
 
-    public List<UrlEntity> getAllUrl(){
+    public List<UrlDAO> getAllUrl(){
         return urlRepository.findAll();
     }
 
-    public UrlEntity getUrlById(Long id){
+    public UrlDAO getUrlById(Long id){
         return urlRepository.getById(id);
     }
 
-    public UrlEntity addNewUrl(UrlEntity url){
+    public UrlDAO addNewUrl(UrlDAO url){
         return urlRepository.save(url);
     }
 
-    public UrlEntity updateUrl(UrlEntity url){
+    public UrlDAO updateUrl(UrlDAO url){
         return urlRepository.save(url);
     }
 
-    public void deleteUrl(UrlEntity url){
+    public void deleteUrl(UrlDAO url){
         urlRepository.delete(url);
     }
 }
