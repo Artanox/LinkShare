@@ -35,13 +35,11 @@ public class TagService {
     }
 
     public TagResponseDTO addNewTag(TagRequestDTO tagRequestDTO) {
-        throwExceptionIfDaoNameAlreadyExist(tagRequestDTO);
         return saveDaoThenMapResponseDto(
                 TagMapper.mapToDao(tagRequestDTO));
     }
 
     public TagResponseDTO updateTag(TagRequestDTO tagRequestDTO, Long id) {
-        throwExceptionIfDaoNameAlreadyExist(tagRequestDTO);
         return saveDaoThenMapResponseDto(
                 tagRepository.findById(id)
                         .map(t -> TagMapper.maptoDao(t, tagRequestDTO))
@@ -58,9 +56,4 @@ public class TagService {
                 tagRepository.save(tagDAO));
     }
 
-    public void throwExceptionIfDaoNameAlreadyExist(TagRequestDTO tagRequestDTO) {
-        tagRepository.findByName(tagRequestDTO.getName())
-                .ifPresent(e -> {
-                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST);});
-    }
 }

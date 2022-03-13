@@ -73,13 +73,6 @@ class TagServiceTest {
     }
 
     @Test
-    void addNewTagBadRequest() {
-        when(tagRepository.findByName(any())).thenReturn(Optional.ofNullable(tagDAO));
-        Throwable exception = assertThrows(ResponseStatusException.class, () -> tagService.addNewTag(tagRequestDTO));
-        assertEquals("400 BAD_REQUEST", exception.getMessage());
-    }
-
-    @Test
     void updateExistingTag() {
         when(tagRepository.findById(any())).thenReturn(Optional.ofNullable(tagDAO));
         when(tagRepository.save(any())).thenReturn(tagDAO);
@@ -97,13 +90,6 @@ class TagServiceTest {
         assertEquals(tagResponseDTO.getId(), testTagResponseDTO.getId());
         assertEquals(tagResponseDTO.getName(), testTagResponseDTO.getName());
         assertEquals(tagResponseDTO.getNsfw(), testTagResponseDTO.getNsfw());
-    }
-
-    @Test
-    void updateTagBadRequest() {
-        when(tagRepository.findByName(any())).thenReturn(Optional.ofNullable(tagDAO));
-        Throwable exception = assertThrows(ResponseStatusException.class, () -> tagService.updateTag(tagRequestDTO, id));
-        assertEquals("400 BAD_REQUEST", exception.getMessage());
     }
 
     @Test
@@ -130,11 +116,5 @@ class TagServiceTest {
         assertEquals(tagResponseDTO.getNsfw(), testTagResponseDTO.getNsfw());
     }
 
-    @Test
-    void throwExceptionIfDaoNameAlreadyExistBadRequest() {
-        when(tagRepository.findByName(any())).thenReturn(Optional.ofNullable(tagDAO));
-        Throwable exception = assertThrows(ResponseStatusException.class, () -> tagService.throwExceptionIfDaoNameAlreadyExist(tagRequestDTO));
-        assertEquals("400 BAD_REQUEST", exception.getMessage());
-    }
 
 }
