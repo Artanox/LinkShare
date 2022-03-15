@@ -31,4 +31,5 @@ public class LinkRequestDTO {
     public List<TagRequestDTO> getTagRequestDTOList() {
         return tagRequestDTOList;
     }
+
 }

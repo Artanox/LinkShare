@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,12 +23,14 @@ public class LinkService{
         this.linkRepository = linkRepository;
     }
 
+   @Transactional
     public LinkResponseDTO getById(Long id) {
         return linkRepository.findById(id)
                 .map(LinkMapper::mapToResponseDTO)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
+    @Transactional
     public List<LinkResponseDTO> getAll() {
         return linkRepository.findAll()
                 .stream()

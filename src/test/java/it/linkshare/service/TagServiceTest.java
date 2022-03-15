@@ -22,7 +22,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class TagServiceTest {
 
-   /* @Mock private TagRepository tagRepository;
+    @Mock private TagRepository tagRepository;
     @InjectMocks private TagService tagService;
 
     static private TagRequestDTO tagRequestDTO;
@@ -39,19 +39,19 @@ class TagServiceTest {
         tagDAO.setId(id);
     }
 
-*//*    @Test
+    @Test
     void getTagById() {
         when(tagRepository.findById(any())).thenReturn(Optional.ofNullable(tagDAO));
-        TagResponseDTO testTagResponseDTO = tagService.getTagById(id);
+        TagResponseDTO testTagResponseDTO = tagService.getById(id);
         assertEquals(tagResponseDTO.getId(), testTagResponseDTO.getId());
         assertEquals(tagResponseDTO.getName(), testTagResponseDTO.getName());
         assertEquals(tagResponseDTO.getNsfw(), testTagResponseDTO.getNsfw());
-    }*//*
+    }
 
     @Test
     void getTagByIdNotFoundException() {
         when(tagRepository.findById(any())).thenReturn(Optional.ofNullable(null));
-        Throwable exception = assertThrows(ResponseStatusException.class, () -> tagService.getTagById(id));
+        Throwable exception = assertThrows(ResponseStatusException.class, () -> tagService.getById(id));
         assertEquals("404 NOT_FOUND", exception.getMessage());
     }
 
@@ -60,13 +60,13 @@ class TagServiceTest {
         when(tagRepository.findAll()).thenReturn(
                 Stream.of(new TagDAO(), new TagDAO(), new TagDAO())
                         .collect(Collectors.toList()));
-        assertEquals(3, tagService.getAllTags().size());
+        assertEquals(3, tagService.getAll().size());
     }
 
     @Test
     void addNewTag() {
         when(tagRepository.save(any())).thenReturn(tagDAO);
-        TagResponseDTO testTagResponseDTO = tagService.addNewTag(tagRequestDTO);
+        TagResponseDTO testTagResponseDTO = tagService.addNew(tagRequestDTO);
         assertEquals(tagResponseDTO.getId(), testTagResponseDTO.getId());
         assertEquals(tagResponseDTO.getName(), testTagResponseDTO.getName());
         assertEquals(tagResponseDTO.getNsfw(), testTagResponseDTO.getNsfw());
@@ -76,7 +76,7 @@ class TagServiceTest {
     void updateExistingTag() {
         when(tagRepository.findById(any())).thenReturn(Optional.ofNullable(tagDAO));
         when(tagRepository.save(any())).thenReturn(tagDAO);
-        TagResponseDTO testTagResponseDTO = tagService.updateTag(tagRequestDTO, id);
+        TagResponseDTO testTagResponseDTO = tagService.update(tagRequestDTO, id);
         assertEquals(tagResponseDTO.getId(), testTagResponseDTO.getId());
         assertEquals(tagResponseDTO.getName(), testTagResponseDTO.getName());
         assertEquals(tagResponseDTO.getNsfw(), testTagResponseDTO.getNsfw());
@@ -86,7 +86,7 @@ class TagServiceTest {
     void updateNotExistingTag() {
         when(tagRepository.findById(any())).thenReturn(Optional.ofNullable(null));
         when(tagRepository.save(any())).thenReturn(tagDAO);
-        TagResponseDTO testTagResponseDTO = tagService.updateTag(tagRequestDTO, id);
+        TagResponseDTO testTagResponseDTO = tagService.update(tagRequestDTO, id);
         assertEquals(tagResponseDTO.getId(), testTagResponseDTO.getId());
         assertEquals(tagResponseDTO.getName(), testTagResponseDTO.getName());
         assertEquals(tagResponseDTO.getNsfw(), testTagResponseDTO.getNsfw());
@@ -95,7 +95,7 @@ class TagServiceTest {
     @Test
     void deleteTag() {
         when(tagRepository.findById(any())).thenReturn(Optional.ofNullable(tagDAO));
-        tagService.deleteTag(id);
+        tagService.delete(id);
         verify(tagRepository, times(1)).findById(any());
         verify(tagRepository, times(1)).delete(any());
     }
@@ -103,7 +103,7 @@ class TagServiceTest {
     @Test
     void deleteTagNotFound() {
         when(tagRepository.findById(any())).thenReturn(Optional.ofNullable(null));
-        Throwable exception = assertThrows(ResponseStatusException.class, () -> tagService.deleteTag(id));
+        Throwable exception = assertThrows(ResponseStatusException.class, () -> tagService.delete(id));
         assertEquals("404 NOT_FOUND", exception.getMessage());
     }
 
@@ -115,6 +115,5 @@ class TagServiceTest {
         assertEquals(tagResponseDTO.getName(), testTagResponseDTO.getName());
         assertEquals(tagResponseDTO.getNsfw(), testTagResponseDTO.getNsfw());
     }
-*/
 
 }

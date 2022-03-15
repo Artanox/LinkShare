@@ -5,6 +5,7 @@ import it.linkshare.dto.UrlRequestDTO;
 import it.linkshare.dto.UrlResponseDTO;
 
 public class UrlMapper {
+
     public static UrlResponseDTO mapToResponseDTO(UrlDAO urlDAO) {
         return new UrlResponseDTO(
                 urlDAO.getId(),
