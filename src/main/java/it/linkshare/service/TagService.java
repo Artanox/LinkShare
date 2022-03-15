@@ -21,38 +21,38 @@ public class TagService {
         this.tagRepository = tagRepository;
     }
 
-    public TagResponseDTO getTagById(Long id) {
+    public TagResponseDTO getById(Long id) {
         return tagRepository.findById(id)
-                .map(TagMapper::mapToResponseDto)
+                .map(TagMapper::mapToResponseDTO)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-    public List<TagResponseDTO> getAllTags() {
+    public List<TagResponseDTO> getAll() {
         return tagRepository.findAll()
                 .stream()
-                .map(TagMapper::mapToResponseDto)
+                .map(TagMapper::mapToResponseDTO)
                 .collect(Collectors.toList());
     }
 
-    public TagResponseDTO addNewTag(TagRequestDTO tagRequestDTO) {
+    public TagResponseDTO addNew(TagRequestDTO tagRequestDTO) {
         return saveDaoThenMapResponseDto(
-                TagMapper.mapToDao(tagRequestDTO));
+                TagMapper.mapToDAO(tagRequestDTO));
     }
 
-    public TagResponseDTO updateTag(TagRequestDTO tagRequestDTO, Long id) {
+    public TagResponseDTO update(TagRequestDTO tagRequestDTO, Long id) {
         return saveDaoThenMapResponseDto(
                 tagRepository.findById(id)
-                        .map(t -> TagMapper.maptoDao(t, tagRequestDTO))
-                        .orElse(TagMapper.mapToDao(id)));
+                        .map(t -> TagMapper.mapToDAO(t, tagRequestDTO))
+                        .orElse(TagMapper.mapToDAO(id, tagRequestDTO)));
     }
 
-    public void deleteTag(Long id) {
+    public void delete(Long id) {
         tagRepository.delete(tagRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)));
     }
 
-    public TagResponseDTO saveDaoThenMapResponseDto(TagDAO tagDAO){
-        return TagMapper.mapToResponseDto(
+    public TagResponseDTO saveDaoThenMapResponseDto(TagDAO tagDAO) {
+        return TagMapper.mapToResponseDTO(
                 tagRepository.save(tagDAO));
     }
 

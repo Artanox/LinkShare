@@ -1,51 +1,34 @@
 package it.linkshare.dao;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
 public class LinkDAO {
-
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private BigDecimal id;
-
-    @ManyToOne
-    private UrlDAO url;
-
+    private Long id;
     private String title;
     private String description;
+    @ManyToOne(cascade = {CascadeType.ALL})
+    private UrlDAO urlDAO;
+    @OneToMany(cascade = {CascadeType.ALL})
+    private List<TagDAO> tagDAOList;
 
-    @OneToMany(targetEntity= TagDAO.class)
-    private List<TagDAO> tagList;
+    public LinkDAO(){}
 
-    public LinkDAO(
-//            UrlEntity url,
-            String title, String description) {
-//        this.url = url;
+    public LinkDAO(String title, String description, UrlDAO urlDAO, List<TagDAO> tagDAOList) {
         this.title = title;
         this.description = description;
-//        this.tagList = tagList;
+        this.urlDAO = urlDAO;
+        this.tagDAOList = tagDAOList;
     }
 
-    public LinkDAO() {
-
-    }
-
-    public BigDecimal getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(BigDecimal id) {
+    public void setId(Long id) {
         this.id = id;
-    }
-
-    public UrlDAO getUrl() {
-        return url;
-    }
-
-    public void setUrl(UrlDAO url) {
-        this.url = url;
     }
 
     public String getTitle() {
@@ -64,11 +47,19 @@ public class LinkDAO {
         this.description = description;
     }
 
-    public List<TagDAO> getTagList() {
-        return tagList;
+    public UrlDAO getUrlDAO() {
+        return urlDAO;
     }
 
-    public void setTagList(List<TagDAO> tagList) {
-        this.tagList = tagList;
+    public void setUrlDAO(UrlDAO urlDAO) {
+        this.urlDAO = urlDAO;
+    }
+
+    public List<TagDAO> getTagDAOList() {
+        return tagDAOList;
+    }
+
+    public void setTagDAOList(List<TagDAO> tagDAOList) {
+        this.tagDAOList = tagDAOList;
     }
 }

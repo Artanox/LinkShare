@@ -6,23 +6,23 @@ import it.linkshare.dto.TagResponseDTO;
 
 public class TagMapper {
 
-    public static TagDAO mapToDao(TagRequestDTO tagRequestDTO){
+    public static TagDAO mapToDAO(TagRequestDTO tagRequestDTO){
         return new TagDAO(tagRequestDTO.getName(), tagRequestDTO.getNsfw());
     }
 
-    public static TagDAO mapToDao(Long id) {
-        TagDAO tagDAO = new TagDAO();
+    public static TagDAO mapToDAO(Long id, TagRequestDTO tagRequestDTO) {
+        TagDAO tagDAO = mapToDAO(tagRequestDTO);
         tagDAO.setId(id);
         return tagDAO;
     }
 
-    public static TagDAO maptoDao(TagDAO tagDAO, TagRequestDTO tagRequestDTO) {
+    public static TagDAO mapToDAO(TagDAO tagDAO, TagRequestDTO tagRequestDTO) {
         tagDAO.setName(tagRequestDTO.getName());
         tagDAO.setNsfw(tagRequestDTO.getNsfw());
         return tagDAO;
     }
 
-    public static TagResponseDTO mapToResponseDto(TagDAO tagDAO){
+    public static TagResponseDTO mapToResponseDTO(TagDAO tagDAO){
         return new TagResponseDTO(tagDAO.getId(), tagDAO.getName(), tagDAO.getNsfw());
     }
 

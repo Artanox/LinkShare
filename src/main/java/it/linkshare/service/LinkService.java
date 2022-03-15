@@ -1,44 +1,62 @@
 package it.linkshare.service;
 
+
 import it.linkshare.dao.LinkDAO;
+import it.linkshare.dto.LinkRequestDTO;
+import it.linkshare.dto.LinkResponseDTO;
+import it.linkshare.mapper.LinkMapper;
 import it.linkshare.repository.LinkRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
-public class LinkService {
-/*
-    LinkRepository linkRepository;
+public class LinkService{
 
-    public LinkService(LinkRepository linkRepository){
+    private final LinkRepository linkRepository;
+
+    public LinkService(LinkRepository linkRepository) {
         this.linkRepository = linkRepository;
     }
 
-    public List<LinkDAO> getAllLink(){
-        return linkRepository.findAll();
-    }
-
-    public LinkDAO getLinkById(Long id){
-        return linkRepository.getById(id);
-    }
-
-    public LinkDAO addNewLink(LinkDAO link){
-        return linkRepository.save(link);
-    }
-
-    public LinkDAO updateLink(LinkDAO link){
+    public LinkResponseDTO getById(Long id) {
         return linkRepository.findById(id)
-                .map(t -> {
-                    t.setName(tag.getName());
-                    t.setNsfw(tag.getNsfw());
-                    return linkRepository.save(t);})
-                .orElseGet(() -> {
-                    tag.setId(id);
-                    return linkRepository.save(tag);});
+                .map(LinkMapper::mapToResponseDTO)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-    public void deleteLink(LinkDAO link){
-        linkRepository.delete(link);
-    }*/
+    public List<LinkResponseDTO> getAll() {
+        return linkRepository.findAll()
+                .stream()
+                .map(LinkMapper::mapToResponseDTO)
+                .collect(Collectors.toList());
+    }
+
+    public LinkResponseDTO addNew(LinkRequestDTO linkRequestDTO) {
+        return saveDaoThenMapResponseDto(
+                LinkMapper.mapToDAO(linkRequestDTO));
+    }
+
+    public LinkResponseDTO update(LinkRequestDTO linkRequestDTO, Long id) {
+        return saveDaoThenMapResponseDto(
+                linkRepository.findById(id)
+                        .map(l -> LinkMapper.mapToDAO(l, linkRequestDTO))
+                        .orElse(LinkMapper.mapToDAO(id, linkRequestDTO))
+        );
+    }
+
+    public void delete(Long id) {
+        linkRepository.delete(linkRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)));
+    }
+
+    public LinkResponseDTO saveDaoThenMapResponseDto(LinkDAO linkDAO) {
+        return LinkMapper.mapToResponseDTO(
+                linkRepository.save(linkDAO));
+    }
 }
+
+

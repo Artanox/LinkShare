@@ -8,17 +8,14 @@ public class UrlDAO {
     @Id @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
     private String name;
-
-    @ManyToOne
-    private TagDAO domain;
+    @ManyToOne(cascade = {CascadeType.ALL})
+    private TagDAO tagDAO;
 
     public UrlDAO(){}
 
-    public UrlDAO(String name
-                     , TagDAO domain
-    ) {
+    public UrlDAO(String name, TagDAO tagDao) {
         this.name = name;
-        this.domain = domain;
+        this.tagDAO = tagDao;
     }
 
     public Long getId() {
@@ -37,11 +34,11 @@ public class UrlDAO {
         this.name = name;
     }
 
-    public TagDAO getDomain() {
-        return domain;
+    public TagDAO getTagDAO() {
+        return tagDAO;
     }
 
-    public void setDomain(TagDAO domain) {
-        this.domain = domain;
+    public void setTagDAO(TagDAO tagDAO) {
+        this.tagDAO = tagDAO;
     }
 }
