@@ -1,4 +1,4 @@
-package it.linkshare.dao.controller;
+package it.linkshare.controller;
 
 import it.linkshare.dto.TagRequestDTO;
 import it.linkshare.dto.TagResponseDTO;
